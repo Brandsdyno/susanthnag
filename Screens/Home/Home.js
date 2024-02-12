@@ -7,6 +7,7 @@ import {
   Alert,
   ScrollView,
   Pressable,
+  ImageBackground,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { ThemedView, StatusBar } from "../../components/UIcomponents";
@@ -20,6 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSignInData } from "../../Store/Slices/SignIn";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Contacts from "expo-contacts";
+import BackGroundImage from "../BackGroundImage";
 // import * as Geocoding from "expo-geocoding";
 
 export default function Home({ navigation, route }) {
@@ -222,7 +224,7 @@ export default function Home({ navigation, route }) {
 
     // reverseGeocode();
   }
-  // locationHandler()
+  locationHandler()
 
   useEffect(() => {}, [focused]);
 
@@ -232,6 +234,7 @@ export default function Home({ navigation, route }) {
       <ThemedView>
         <View style={styles.main}>
           <ScrollView>
+          <ImageBackground source={images.bgImage} resizeMode="cover" style={styles.image} >
             <View style={styles.logo}>
               <Image
                 source={images.logo}
@@ -277,7 +280,7 @@ export default function Home({ navigation, route }) {
                 height: 100,
                 overflow: "hidden",
               }}
-              onPress={locationHandler}
+              // onPress={locationHandler}
             >
               <Image
                 source={images.shadowHelp}
@@ -287,6 +290,7 @@ export default function Home({ navigation, route }) {
                 }}
               />
             </TouchableOpacity>
+            </ImageBackground>
           </ScrollView>
         </View>
       </ThemedView>
@@ -316,6 +320,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 18,
     marginBottom: 20,
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
   },
   btn: {
     minWidth: 244,

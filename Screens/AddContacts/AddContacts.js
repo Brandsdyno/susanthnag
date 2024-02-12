@@ -10,6 +10,7 @@ import {
   Modal,
   Pressable,
   TextInput,
+  ImageBackground,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import * as Contacts from "expo-contacts";
@@ -25,6 +26,7 @@ import { images } from "../../constants";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Loader from "../../components/UIcomponents/Loader";
+import BackGroundImage from "../BackGroundImage";
 export default function AddContacts() {
   const focued = useIsFocused();
 
@@ -257,6 +259,8 @@ export default function AddContacts() {
       <StatusBar />
       <ThemedView>
         <ScrollView style={styles.main} nestedScrollEnabled={false}>
+        <ImageBackground source={images.bgImage} resizeMode="cover" style={styles.image} >
+
           <View style={styles.logo}>
             <Image
               source={images.logo}
@@ -390,6 +394,7 @@ export default function AddContacts() {
               />
             </View>
           </View>
+          </ImageBackground>
         </ScrollView>
 
         {/* Primary */}
@@ -643,6 +648,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignSelf: "center",
     marginVertical: 20,
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
   },
   secondaryBox: {
     width: 309,

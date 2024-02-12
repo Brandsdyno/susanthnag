@@ -8,6 +8,7 @@ import {
   Alert,
   TextInput,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 import React, { useState, useRef, useEffect } from "react";
 import { images } from "../../constants";
@@ -22,6 +23,7 @@ import axios from "axios";
 import { setSignInData } from "../../Store/Slices/SignIn";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import BackGroundImage from "../BackGroundImage";
 export default function OTPVerificationScreen({ route}) {
   const { width, height } = useWindowDimensions();
   // const [mobileNumber, setMobileNumber] = useState("");
@@ -94,7 +96,7 @@ export default function OTPVerificationScreen({ route}) {
         console.log({ data },"k");
         if (data?.userId) {
           storeUserId(data?.userId);
-          navigation.navigate("BottomTabNavigator")
+          navigation.navigate("ProfileEditScreen")
         } else {
           dispatch(setSignInData({ userId: "", status: "failed" }));
         }
@@ -128,6 +130,7 @@ export default function OTPVerificationScreen({ route}) {
       <StatusBar />
       <ThemedView>
         <ScrollView style={[styles.main, { height: height }]}>
+        <ImageBackground source={images.bgImage} resizeMode="cover" style={styles.image} >
           <View style={styles.logo}>
             <Image
               source={images.logo}
@@ -245,6 +248,7 @@ export default function OTPVerificationScreen({ route}) {
               </Text>
             </View>
           </View>
+          </ImageBackground>
         </ScrollView>
       </ThemedView>
     </>
@@ -277,6 +281,10 @@ const styles = StyleSheet.create({
   inputWithBtn: {
     width: "100%",
     flexDirection: "column",
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
   },
   otpBoxes: {
     width: "100%",

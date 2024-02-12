@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   ScrollView,
   Alert,
+  ImageBackground,
 } from "react-native";
 import React, { useState, useLayoutEffect } from "react";
 import { images } from "../../constants";
@@ -21,6 +22,7 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { setSignInData } from "../../Store/Slices/SignIn";
+import BackGroundImage from "../BackGroundImage";
 export default function Authenticate({}) {
   const { width, height } = useWindowDimensions();
   const [mobileNumber, setMobileNumber] = useState("");
@@ -74,6 +76,8 @@ export default function Authenticate({}) {
       <StatusBar />
       <ThemedView>
         <ScrollView style={[styles.main, { height: height }]}>
+
+    <ImageBackground source={images.bgImage} resizeMode="cover" style={styles.image} >
           <View style={styles.logo}>
             <Image
               source={images.logo}
@@ -143,6 +147,7 @@ export default function Authenticate({}) {
             </View>
           </View>
           {/* <Loader isVisible={true}/> */}
+          </ImageBackground>
         </ScrollView>
       </ThemedView>
     </>
@@ -161,6 +166,10 @@ const styles = StyleSheet.create({
     borderRadius: 90,
     alignSelf: "center",
     marginVertical: 20,
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
   },
   s_img: {
     alignSelf: "center",

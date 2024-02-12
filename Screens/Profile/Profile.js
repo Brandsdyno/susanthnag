@@ -9,6 +9,7 @@ import {
   Alert,
   Modal,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { ThemedView, StatusBar } from "../../components/UIcomponents";
@@ -23,6 +24,8 @@ import axios from "axios";
 
 
 import SelectDropdown from "react-native-select-dropdown";
+import BackGroundImage from "../BackGroundImage";
+import { images } from "../../constants";
 
 export default function Profile({navigation}) {
   const focued = useIsFocused();
@@ -49,6 +52,7 @@ export default function Profile({navigation}) {
   const [age, setAge] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
+  const [pincode, setPincode] = useState("");
 
   console.log({ focued }, "Profile");
 
@@ -78,6 +82,7 @@ export default function Profile({navigation}) {
       setAge(data[0]?.age);
       setCity(data[0]?.city);
       setState(data[0]?.state);
+      setPincode(data[0]?.pincode);
     } catch (error) {
       console.log({ error }, "EE");
     }
@@ -138,6 +143,7 @@ export default function Profile({navigation}) {
       <StatusBar />
       <ThemedView>
         <ScrollView style={[styles.main]}>
+        <ImageBackground source={images.bgImage} resizeMode="cover" style={styles.image} >
           {/* <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             // style={[styles.main, { height: height }]}
@@ -216,9 +222,16 @@ export default function Profile({navigation}) {
                   disabled={ true}
                 />
               </View>
+              <View
+                style={{
+                  flexDirection: "column",
+                  gap: 8,
+                  marginTop : 12
+                }}
+              >
               <TextInputWithLabel
                 label={"Age"}
-                inputStyle={[styles.inputStyles, { width: 103 }]}
+                inputStyle={[styles.inputStyles, { width: 103}]}
                 labelStyle={styles.labelStyles}
                 value={age}
                 onChangeText={(e) => {
@@ -228,6 +241,7 @@ export default function Profile({navigation}) {
                 type="number-pad"
                 editable={false}
               />
+              </View>
             </View>
             <TextInputWithLabel
               label={"Address"}
@@ -266,11 +280,21 @@ export default function Profile({navigation}) {
                   setState(selectedItem);
                 }}
                 defaultValue={state ?? "select state"}
-                buttonStyle={[styles.inputStyles, { width: "100%" }]}
+                buttonStyle={[styles.inputStyles, { width: "100%",justifyContent:'flex-start'}]}
                 disabled={ true}
               />
             </View>
-
+            <TextInputWithLabel
+              label={"Pincode"}
+              inputStyle={styles.inputStyles}
+              labelStyle={styles.labelStyles}
+              value={pincode}
+              onChangeText={(e) => {
+                setPincode(e);
+              }}
+              editBtn={false}
+              editable={false}
+            />
             <BorderRoundedButton
                 label={"Edit"}
                 labelStyle={{
@@ -291,6 +315,7 @@ export default function Profile({navigation}) {
             
           </View>
           {/* </KeyboardAvoidingView> */}
+          </ImageBackground>
         </ScrollView>
         
       </ThemedView>
@@ -318,9 +343,14 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignSelf: "center",
   },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   inputStyles: {
     borderWidth: 0,
     borderRadius: 100,
+   
     backgroundColor: "#EDE9E9",
     color: "black",
     height: 44,
@@ -331,5 +361,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "800",
     fontFamily: "Inter",
+    marginLeft : 10
   },
+  
 });

@@ -6,6 +6,7 @@ import {
   FlatList,
   Image,
   Alert,
+  ImageBackground,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { ThemedView, StatusBar } from "../../components/UIcomponents";
@@ -14,6 +15,7 @@ import { useSelector } from "react-redux";
 import useIsFocused from "../../useIsFocused";
 import axios from "axios";
 import Loader from "../../components/UIcomponents/Loader";
+import BackGroundImage from "../BackGroundImage";
 export default function Contacts() {
   const userId = useSelector((state) => state.signIn.userId);
   const focued = useIsFocused();
@@ -70,6 +72,9 @@ export default function Contacts() {
       <StatusBar />
       <ThemedView>
         <ScrollView style={styles.main} nestedScrollEnabled={false}>
+        <ImageBackground source={images.bgImage} resizeMode="cover" style={styles.image} >
+
+        <BackGroundImage />
           <View style={styles.logo}>
             <Image
               source={images.logo}
@@ -79,6 +84,7 @@ export default function Contacts() {
           <View style={styles.primaryBox}>
             <Text style={styles.title}>Primary contacts</Text>
             <ScrollView nestedScrollEnabled={true}>
+
               {primaryContacts?.length > 0 &&
                 primaryContacts?.map((item, index) => {
                   return (
@@ -179,6 +185,7 @@ export default function Contacts() {
             </ScrollView>
           </View>
           <Loader isVisible={isLoderOn} />
+          </ImageBackground>
         </ScrollView>
       </ThemedView>
     </React.Fragment>
@@ -196,6 +203,10 @@ const styles = StyleSheet.create({
     borderRadius: 90,
     alignSelf: "center",
   },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   title: {
     color: "black",
     fontFamily: "Inter",
@@ -207,6 +218,10 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     maxWidth: "80%",
     marginLeft: 10,
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
   },
   primaryBox: {
     width: 309,

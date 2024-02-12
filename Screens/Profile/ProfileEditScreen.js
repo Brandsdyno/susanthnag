@@ -9,6 +9,7 @@ import {
   Alert,
   Modal,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 import React, { useEffect, useState, useLayoutEffect } from "react";
 import { ThemedView, StatusBar } from "../../components/UIcomponents";
@@ -22,7 +23,8 @@ import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
 
 import SelectDropdown from "react-native-select-dropdown";
-import { icons } from "../../constants";
+import { icons, images } from "../../constants";
+import BackGroundImage from "../BackGroundImage";
 
 export default function ProfileEditScreen({ navigation }) {
   const focued = useIsFocused();
@@ -48,6 +50,7 @@ export default function ProfileEditScreen({ navigation }) {
   const [age, setAge] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
+  const [pincode, setPincode] = useState("");
 
   console.log({ focued }, "Profile");
 
@@ -77,6 +80,8 @@ export default function ProfileEditScreen({ navigation }) {
       setAge(data[0]?.age);
       setCity(data[0]?.city);
       setState(data[0]?.state);
+      setPincode(data[0]?.pincode);
+
     } catch (error) {
       console.log({ error }, "EE");
     }
@@ -125,6 +130,7 @@ export default function ProfileEditScreen({ navigation }) {
           age: age,
           state: state,
           city: city,
+          pincode:pincode
         }
       );
 
@@ -197,6 +203,7 @@ export default function ProfileEditScreen({ navigation }) {
       <StatusBar />
       <ThemedView>
         <ScrollView style={[styles.main]}>
+        <ImageBackground source={images.bgImage} resizeMode="cover" style={styles.image} >
           {/* <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "padding" : "height"}
               // style={[styles.main, { height: height }]}
@@ -272,6 +279,13 @@ export default function ProfileEditScreen({ navigation }) {
                   // disabled={muteNotificationStatus ? false : true}
                 />
               </View>
+              <View
+                style={{
+                  flexDirection: "column",
+                  gap: 8,
+                  marginTop : 12
+                }}
+              >
               <TextInputWithLabel
                 label={"Age"}
                 inputStyle={[styles.inputStyles, { width: 103 }]}
@@ -283,6 +297,7 @@ export default function ProfileEditScreen({ navigation }) {
                 editBtn={editable}
                 type="number-pad"
               />
+              </View>
             </View>
             <TextInputWithLabel
               label={"Address"}
@@ -322,7 +337,16 @@ export default function ProfileEditScreen({ navigation }) {
                 // disabled={muteNotificationStatus ? false : true}
               />
             </View>
-
+            <TextInputWithLabel
+              label={"Pincode"}
+              inputStyle={styles.inputStyles}
+              labelStyle={styles.labelStyles}
+              value={pincode}
+              onChangeText={(e) => {
+                setPincode(e);
+              }}
+              editBtn={editable}
+            />
             <View style={{}}>
               <BorderRoundedButton
                 label={"Save"}
@@ -343,6 +367,7 @@ export default function ProfileEditScreen({ navigation }) {
             </View>
           </View>
           {/* </KeyboardAvoidingView> */}
+          </ImageBackground>
         </ScrollView>
         <Modal
           visible={isProfileUpdating}
@@ -407,5 +432,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "800",
     fontFamily: "Inter",
+    marginLeft : 10
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
   },
 });
